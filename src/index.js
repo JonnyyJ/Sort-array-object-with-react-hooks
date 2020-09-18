@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useCallback} from 'react';
 import ReactDOM from 'react-dom';
 import "./style.css"
 const arrObject =[{
@@ -38,7 +38,8 @@ function App(){
     const [sortAscendingValue, setSortAscendingValue] = useState(true)
     const [testArr, setTestArr] = useState(arrObject)
 
-    useEffect(() => {
+    const sortArr = useCallback(()=>{
+        setSortAscendingValue(!sortAscendingValue)
         const sorted = sortArrayByFieldName({
             array: testArr,
             ascValue: sortAscendingValue,
@@ -46,9 +47,10 @@ function App(){
         })
         setTestArr(sorted)
     },[testArr, sortAscendingValue, setTestArr])
+
     return(
         <div className="App">
-            <button onClick={() => setSortAscendingValue(!sortAscendingValue)}>
+            <button onClick={sortArr}>
                 {sortAscendingValue.toString()}
             </button>
             {testArr.map(i=>{
